@@ -1,1 +1,1 @@
-Map.setCanvasSize();
+Map.createCanvas();
