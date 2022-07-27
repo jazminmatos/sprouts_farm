@@ -11,11 +11,10 @@ class Map {
         this.ctx.fillStyle = "white";
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-        this.map.src = './images/sprouts_farm_map.png'
-        console.log("map:", this.map)
-        
+        // TODO: Move this into its own function
+        this.map.src = './images/sprouts_farm_map.png'        
         this.map.onload = () => {
-            this.ctx.drawImage(this.map, 0, 0);
+            this.ctx.drawImage(this.map, -75, -30);
         }
     }
 
