@@ -1,1 +1,2 @@
 Map.createCanvas();
+Map.loadMap();
