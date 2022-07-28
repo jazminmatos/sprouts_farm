@@ -60,6 +60,10 @@ const Map = () => {
                 break
         }
     }
+
+    const animate = () => {
+
+    }
     
     useEffect(() => {
         const canvas = canvasRef.current
@@ -71,7 +75,7 @@ const Map = () => {
         loadMapAndPlayer(ctx)
 
         canvas.addEventListener("keydown", onKeyDown)
-    })
+    }, [])
 
     const handleClick = (e) => {
         console.log("Hi! from clicking...")
