@@ -1,0 +1,12 @@
+html, body, #root {
+    min-height: 100vh;
+    min-width: 100vh;
+}
+
+html {
+    background-color: red;
+}
+
+#root {
+    background-color: white;
+}
