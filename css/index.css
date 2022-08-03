@@ -3,8 +3,8 @@ html, body {
     min-width: 100vh;
 }
 
-#canvas {
-    background: red;
+canvas {
+    background: #D99A9A;
     padding: 4em;
     image-rendering: pixelated;
 }
