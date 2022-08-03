@@ -1,0 +1,10 @@
+html, body {
+    min-height: 100vh;
+    min-width: 100vh;
+}
+
+#canvas {
+    background: red;
+    padding: 4em;
+    image-rendering: pixelated;
+}
