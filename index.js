@@ -10,6 +10,8 @@ map.src = './images/sprouts_farm_map.png'
 const playerImage = new Image();
 playerImage.src = './images/bunnyDown.png'
 
+const playerSpeed = 1
+
 class Sprite {
     constructor({position,velocity, image}) {
         this.position = position
@@ -66,10 +68,10 @@ const animate = () => {
     )
 
     // TODO: Decide whether player should be able to move diagonally
-    if (keys.w.pressed) background.position.y += .75
-    if (keys.a.pressed) background.position.x += .75
-    if (keys.s.pressed) background.position.y -= .75
-    if (keys.d.pressed) background.position.x -= .75
+    if (keys.w.pressed) background.position.y += playerSpeed
+    if (keys.a.pressed) background.position.x += playerSpeed
+    if (keys.s.pressed) background.position.y -= playerSpeed
+    if (keys.d.pressed) background.position.x -= playerSpeed
 }
 
 animate()
