@@ -4,6 +4,14 @@ canvas.width = 1024
 canvas.height = 576
 ctx.fillRect(0, 0, canvas.width, canvas.height)
 
+const tileMapWidth = 70;
+
+// Converts collisions array into a 2D array
+const collisionsMap = []
+for (let i = 0; i < collisions.length; i += tileMapWidth) {
+    collisionsMap.push(collisions.slice(i, tileMapWidth + i))
+}
+
 const map = new Image();
 map.src = './images/sprouts_farm_map.png'
 
@@ -49,7 +57,6 @@ const keys = {
 
 const animate = () => {
     window.requestAnimationFrame(animate)
-    console.log(animate)
 
     ctx.imageSmoothingQuality = 'high'
     background.draw()
