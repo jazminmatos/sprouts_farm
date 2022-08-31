@@ -72,6 +72,13 @@ const animate = () => {
     if (keys.a.pressed) background.position.x += playerSpeed
     if (keys.s.pressed) background.position.y -= playerSpeed
     if (keys.d.pressed) background.position.x -= playerSpeed
+
+    // Doesn't allow player to move diagonally
+    // TODO: Define lastKey on keyDown event listener
+    // if (keys.w.pressed && lastKey === 'w') background.position.y += playerSpeed
+    // else if (keys.a.pressed && lastKey === 'a') background.position.x += playerSpeed
+    // else if (keys.s.pressed && lastKey === 's') background.position.y -= playerSpeed
+    // else if (keys.d.pressed && lastKey === 'd') background.position.x -= playerSpeed
 }
 
 animate()
@@ -80,19 +87,15 @@ const onKeyDown = (e) => {
     switch (e.key) {
         case 'w':
             keys.w.pressed = true
-            // console.log(`pressed ${e.key}`)
             break
         case 'a':
             keys.a.pressed = true
-            // console.log(`pressed ${e.key}`)
             break
         case 's':
             keys.s.pressed = true
-            // console.log(`pressed ${e.key}`)
             break
         case 'd':
             keys.d.pressed = true
-            // console.log(`pressed ${e.key}`)
             break
         default:
             break
