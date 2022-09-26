@@ -12,6 +12,26 @@ for (let i = 0; i < collisions.length; i += tileMapWidth) {
     collisionsMap.push(collisions.slice(i, tileMapWidth + i))
 }
 
+const mapAndBoundariesOffset = {
+    x: -232,
+    y: -480
+} 
+
+// Creates map boundaries and populates array using collisionsMap
+const boundaries = []
+collisionsMap.forEach((row, indexOfCurrentRow) => {
+    row.forEach((symbol, indexInsideCurrentRow) => {
+        if (symbol === 456) {
+            boundaries.push(new Boundary({
+                position: {
+                    x: indexInsideCurrentRow * Boundary.boundaryWidth + mapAndBoundariesOffset.x, 
+                    y: indexOfCurrentRow * Boundary.boundaryHeight + mapAndBoundariesOffset.y
+                }
+            }))
+        }
+    })
+})
+
 const map = new Image();
 map.src = './images/sprouts_farm_map.png'
 
@@ -20,10 +40,11 @@ playerImage.src = './images/bunnyDown.png'
 
 const playerSpeed = 1.5
 
+
 const background = new Sprite({
     position: {
-        x: -232, 
-        y: -480
+        x: mapAndBoundariesOffset.x, 
+        y: mapAndBoundariesOffset.y
     },
     image: map
 })
@@ -43,11 +64,20 @@ const keys = {
     },
 }
 
+const testBoundary = new Boundary({ position: {
+    x: 400,
+    y: 400
+}})
+
 const animate = () => {
     window.requestAnimationFrame(animate)
 
     ctx.imageSmoothingQuality = 'high'
     background.draw()
+    // boundaries.forEach(boundary => {
+    //     Boundary.drawBoundary(ctx, boundary)
+    // })
+    Boundary.drawBoundary(ctx, testBoundary)
     ctx.drawImage(
         playerImage, 
         // cropping
