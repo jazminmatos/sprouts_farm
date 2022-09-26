@@ -18,7 +18,7 @@ map.src = './images/sprouts_farm_map.png'
 const playerImage = new Image();
 playerImage.src = './images/bunnyDown.png'
 
-const playerSpeed = 1
+const playerSpeed = 1.5
 
 const background = new Sprite({
     position: {
