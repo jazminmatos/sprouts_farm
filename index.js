@@ -40,6 +40,16 @@ playerImage.src = './images/bunnyDown.png'
 
 const playerSpeed = 1.5
 
+const player = new Sprite({
+    position: {
+        x: canvas.width / 2 - (192 / 4) / 2,
+        y: canvas.height / 2 - 48
+    },
+    image: playerImage,
+    frames: {
+        max: 4
+    }
+})
 
 const background = new Sprite({
     position: {
@@ -64,67 +74,139 @@ const keys = {
     },
 }
 
-const testBoundary = new Boundary({ position: {
-    x: 400,
-    y: 400
-}})
+// Things that should move behind the player image: background, collisions, foreground
+const movables = [background, ...boundaries]
+function rectangularCollision({ rectangle1, rectangle2 }) {
+    return (
+        rectangle1.position.x + rectangle1.width - 15 >= rectangle2.position.x &&
+        rectangle1.position.x <= rectangle2.position.x + rectangle2.width - 15 &&
+        rectangle1.position.y <= rectangle2.position.y + rectangle2.height - 15 &&
+        rectangle1.position.y + rectangle1.height >= rectangle2.position.y
+    )
+}
 
 const animate = () => {
     window.requestAnimationFrame(animate)
 
     ctx.imageSmoothingQuality = 'high'
     background.draw()
-    // boundaries.forEach(boundary => {
-    //     Boundary.drawBoundary(ctx, boundary)
-    // })
-    Boundary.drawBoundary(ctx, testBoundary)
-    ctx.drawImage(
-        playerImage, 
-        // cropping
-        0, // x coordinate
-        0, // y coordinate
-        playerImage.width / 4, // crop width
-        playerImage.height, //crop height
-        // actual width & height of image
-        canvas.width / 2 - (playerImage.width / 4) / 2, // x coordinate
-        canvas.height / 2 - playerImage.height, // y coordinate
-        playerImage.width/4,
-        playerImage.height
-    )
+    boundaries.forEach(boundary => {
+        Boundary.drawBoundary(ctx, boundary)
+    })
+    player.draw()
 
-    // TODO: Decide whether player should be able to move diagonally
-    if (keys.w.pressed) background.position.y += playerSpeed
-    if (keys.a.pressed) background.position.x += playerSpeed
-    if (keys.s.pressed) background.position.y -= playerSpeed
-    if (keys.d.pressed) background.position.x -= playerSpeed
+    // Checking if lastKey pressed prevents player from moving diagonally
+    let moving = true
+    if (keys.w.pressed && lastKey === 'w') {
+        for (let i = 0; i < boundaries.length; i++) {
+            const boundary = boundaries[i]
+            // Checking for collisions between player and boundaries
+            if (
+                rectangularCollision({
+                    rectangle1: player,
+                    rectangle2: {...boundary, position: {
+                        x: boundary.position.x,
+                        y: boundary.position.y + playerSpeed
+                    }}
+                })
+            ) {
+                console.log('colliding')
+                moving = false
+                break
+            }
+        }
 
-    // Doesn't allow player to move diagonally
-    // if (keys.w.pressed && lastKey === 'w') background.position.y += playerSpeed
-    // else if (keys.a.pressed && lastKey === 'a') background.position.x += playerSpeed
-    // else if (keys.s.pressed && lastKey === 's') background.position.y -= playerSpeed
-    // else if (keys.d.pressed && lastKey === 'd') background.position.x -= playerSpeed
+        if (moving)
+        movables.forEach(movable => {movable.position.y += playerSpeed})
+    }
+    else if (keys.a.pressed && lastKey === 'a') {
+        for (let i = 0; i < boundaries.length; i++) {
+            const boundary = boundaries[i]
+            // Checking for collisions between player and boundaries
+            if (
+                rectangularCollision({
+                    rectangle1: player,
+                    rectangle2: {...boundary, position: {
+                        x: boundary.position.x + playerSpeed,
+                        y: boundary.position.y
+                    }}
+                })
+            ) {
+                console.log('colliding')
+                moving = false
+                break
+            }
+        }
+
+        if (moving)
+        movables.forEach(movable => {movable.position.x += playerSpeed})
+    }
+    else if (keys.s.pressed && lastKey === 's') {
+        for (let i = 0; i < boundaries.length; i++) {
+            const boundary = boundaries[i]
+            // Checking for collisions between player and boundaries
+            if (
+                rectangularCollision({
+                    rectangle1: player,
+                    rectangle2: {...boundary, position: {
+                        x: boundary.position.x,
+                        y: boundary.position.y - playerSpeed
+                    }}
+                })
+            ) {
+                console.log('colliding')
+                moving = false
+                break
+            }
+        }
+
+        if (moving)
+        movables.forEach(movable => {movable.position.y -= playerSpeed})
+    }
+    else if (keys.d.pressed && lastKey === 'd') {
+        for (let i = 0; i < boundaries.length; i++) {
+            const boundary = boundaries[i]
+            // Checking for collisions between player and boundaries
+            if (
+                rectangularCollision({
+                    rectangle1: player,
+                    rectangle2: {...boundary, position: {
+                        x: boundary.position.x - playerSpeed,
+                        y: boundary.position.y
+                    }}
+                })
+            ) {
+                console.log('colliding')
+                moving = false
+                break
+            }
+        }
+
+        if (moving)
+        movables.forEach(movable => {movable.position.x -= playerSpeed})
+    }
 }
 
 animate()
 
-// let lastKey = ''
+let lastKey = ''
 const onKeyDown = (e) => {
     switch (e.key) {
         case 'w':
             keys.w.pressed = true
-            // lastKey = 'w'
+            lastKey = 'w'
             break
         case 'a':
             keys.a.pressed = true
-            // lastKey = 'a'
+            lastKey = 'a'
             break
         case 's':
             keys.s.pressed = true
-            // lastKey = 's'
+            lastKey = 's'
             break
         case 'd':
             keys.d.pressed = true
-            // lastKey = 'd'
+            lastKey = 'd'
             break
         default:
             break
