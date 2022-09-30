@@ -2,7 +2,7 @@ class Boundary {
     static boundaryHeight = 48
     static boundaryWidth = 48
     static drawBoundary(ctx, boundary) {
-        // ctx.fillstyle = "red"
+        ctx.fillStyle = 'rgba(255, 0, 0, 0)'
         ctx.fillRect(boundary.position.x, boundary.position.y, boundary.width, boundary.height)
     }
 
